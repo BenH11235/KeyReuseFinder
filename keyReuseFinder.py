@@ -6,6 +6,7 @@ import random
 import itertools
 import numpy as np
 import sys
+import argparse
 
 our_pale_attempt_to_represent_minus_infinity = -sys.maxint-1 #minimum integer we can represent
 
@@ -91,14 +92,14 @@ def findparallelciphers(buf):
     return matches
 
 
-def getHeatMap(mystr, outputFile):
+def getHeatMap(inputBuffer, outputFile):
     """Generates evidence 'heat map' of string based on its evidence gain table (see xtTable for details"""
     import png
-    table = xtTable(mystr, (2*log(len(mystr),2))-1)
+    table = xtTable(inputBuffer, (2*log(len(inputBuffer),2))-1)
     #collect all evidence values on table, with 'sanity cutoff' of -5, for statistics
     tvals = [\
-            table[i][j] for (i,j) in itertools.product(range(len(mystr)),repeat=2)\
-    if t[i][j]>-5]
+            table[i][j] for (i,j) in itertools.product(range(len(inputBuffer)),repeat=2)\
+    if table[i][j]>-5]
     evidenceMean = np.average(tvals)
     evidenceStdev = np.std(tvals)
     evidenceScore = lambda x : ((x-evidenceMean) / evidenceStdev) #z-score of evidence
@@ -121,26 +122,41 @@ def getHeatMap(mystr, outputFile):
         tuple(
             reduce(
                 lambda x,y: x+y,
-                [epixel(t[i][j]) for j in range(len(mystr))]
+                [epixel(table[i][len(inputBuffer)-j-1]) for j in range(len(inputBuffer))]
             )
         )	 
-    for i in range(len(mystr))
+    for i in range(len(inputBuffer))
     ]
     f = open(outputFile, 'wb')
-    w = png.Writer(len(mystr),len(mystr))
+    w = png.Writer(len(inputBuffer),len(inputBuffer))
     w.write(f,pixels)
     f.close()
 
 
 if __name__ == "__main__":
-    import sys
-    with open(sys.argv[1],'r') as fh:
-        mystr = fh.readlines()[0]
+    cli = argparse.ArgumentParser(description="Attempt to detect key reuse in a given file.")
+    cli.add_argument("inputFilePath", metavar="inputFilePath", type=str, help="Path to file containing input buffer")
+    args = cli.parse_args()
+    with open(args.inputFilePath,'r') as fh:
+        inputBuffer = fh.readlines()[0]
     ptDistribution = crypto.softDist
-    threshold = (2*log(len(mystr),2))-1
+    threshold = (2*log(len(inputBuffer),2))-1
     xorText = crypto.distributionFromFunction(\
             [ptDistribution]*2, lambda (c1,c2): crypto.chrxor(c1,c2)\
     )
-    ptxts =  partition(ptVector(mystr), (threshold+1)/2, (threshold+1)/2)
-    print findparallelciphers(mystr)
-    print ptxts
+    ptxts =  partition(ptVector(inputBuffer), (threshold+1)/2, (threshold+1)/2)
+    suspectedReuses = findparallelciphers(inputBuffer)
+    if suspectedReuses == []: 
+        print "No suspected key reuses found"
+    else:
+        print "Suspected key reuse instances:"
+    for item in suspectedReuses:
+        print "\tOffsets {} and {}, lenth {}".format(
+            item[0][0],
+            item[0][1],
+            item[1]
+        )  
+    print "Suspected plaintexts intervals found:"
+    for item in ptxts:
+            print "\tFrom offset {} to offset {}".format(item[0],item[1])
+    getHeatMap(inputBuffer,"out.png")

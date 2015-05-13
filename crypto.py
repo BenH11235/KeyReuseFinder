@@ -6,9 +6,8 @@ import itertools
 import operator
 import random
 
-MIN_PROB = 0.00001
+surprise = lambda p: sys.maxint if p==0 else log(1/p,2)
 
-surprise = lambda p: log(1/MIN_PROB,2) if p==0 else log(1/p,2)
 class Distribution:
 	def __init__(self,probs):
 		self.probs=probs
