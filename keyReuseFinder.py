@@ -92,7 +92,7 @@ def findparallelciphers(buf):
     return matches
 
 
-def getHeatMap(inputBuffer, outputFile):
+def dumpHeatMap(inputBuffer, outputFile):
     """Generates evidence 'heat map' of string based on its evidence gain table (see xtTable for details"""
     import png
     table = xtTable(inputBuffer, (2*log(len(inputBuffer),2))-1)
@@ -134,7 +134,8 @@ def getHeatMap(inputBuffer, outputFile):
 
 
 if __name__ == "__main__":
-    cli = argparse.ArgumentParser(description="Attempt to detect key reuse in a given file.")
+    cli = argparse.ArgumentParser(description="Attempt to detect key reuse in a given file")
+    cli.add_argument("-i", type=str, metavar="path_to_file", help="Output evidence 'heat map' image to specified path")
     cli.add_argument("inputFilePath", metavar="inputFilePath", type=str, help="Path to file containing input buffer")
     args = cli.parse_args()
     with open(args.inputFilePath,'r') as fh:
@@ -159,4 +160,5 @@ if __name__ == "__main__":
     print "Suspected plaintext intervals found:"
     for item in ptxts:
             print "\tFrom offset {} to offset {}".format(item[0],item[1])
-    getHeatMap(inputBuffer,"out.png")
+    if args.i is not None:
+        dumpHeatMap(inputBuffer,args.i)
