@@ -18,7 +18,9 @@ def diagonals(boardsize):
         yield [(j+i,j) for j in range(boardsize-i)]
 
 def evidenceLogOdds(char, dist):
-    """Gives the log-odd-ratio, in bits, of "character originates in given distribution" vs. "character originates in random distribution"""
+    """Gives the log-odd-ratio, in bits, of:
+    "character originates in given distribution" vs. 
+    "character originates in random distribution"""
     pDist = dist.probOfList([char]) #probability of char in dist
     if pDist==0: 
         return our_pale_attempt_to_represent_minus_infinity
@@ -27,7 +29,9 @@ def evidenceLogOdds(char, dist):
     return result
 
 def xtTable(buf,threshold):
-    """Given a buffer, this returns an nxn grid where cell (i,j) corresponds to the log-odd-ratio of (buf[i] xor buf[j]) appearing in the xorText distribution vs. in the random character distribution."""
+    """Given a buffer, this returns an nxn grid where cell (i,j)
+    corresponds to the log-odd-ratio of (buf[i] xor buf[j]) appearing in the 
+    xorText distribution vs. in the random character distribution."""
     table_size = range(len(buf))
     return [[\
             evidenceLogOdds(crypto.chrxor(buf[i],buf[j]),xorText) 
@@ -35,11 +39,15 @@ def xtTable(buf,threshold):
     for j in table_size]
 
 def ptVector(buf):
-    """Given a buffer, this returns an n-size vector where the ith entry corresponds to the log-odd-ration of buf[i] appearing in the plainText distribution vs. in the random character distribution."""
+    """Given a buffer, this returns an n-size vector where the ith entry
+    corresponds to the log-odd-ration of buf[i] appearing in the plainText 
+    distribution vs. in the random character distribution."""
     return [evidenceLogOdds(c,crypto.softDist) for c in buf]
 
 def partition(nums,goal,breakThreshold):
-    """Takes a vector of numbers as input and returns all delimiters of positive number runs that sum up to more than the goal, as long as they are not interrupted by runs of negative numbers that sum up to the breakThreshold"""
+    """Takes a vector of numbers as input and returns all delimiters of positive 
+    number runs that sum up to more than the goal, as long as they are not 
+    interrupted by runs of negative numbers that sum up to the breakThreshold"""
     result = [] #used to keep runs we have seen that qualify
     goodVibes = 0 #good vibes collected during current run
     badVibes = 0 #bad vibes collected during current run
@@ -71,7 +79,8 @@ def findPtruns(buf):
     return partition(ptVector(buf), threshold, threshold)
 
 def findparallelciphers(buf):
-    """Given an input buffer, finds index tuples that are likely to be offsets of different strings that had been XORed with the same keystream"""
+    """Given an input buffer, finds index tuples that are likely to be 
+    offsets of different strings that had been XORed with the same keystream"""
     matches = []
     threshold = (2*log(len(buf),2))-1 #bits
     table = xtTable(buf,threshold)
@@ -93,7 +102,7 @@ def findparallelciphers(buf):
 
 
 def dumpHeatMap(inputBuffer, outputFile):
-    """Generates evidence 'heat map' of string based on its evidence gain table (see xtTable for details"""
+    """Generates evidence 'heat map' of string based on its evidence gain table (see xtTable for details)"""
     import png
     table = xtTable(inputBuffer, (2*log(len(inputBuffer),2))-1)
     #collect all evidence values on table, with 'sanity cutoff' of -5, for statistics
@@ -135,18 +144,32 @@ def dumpHeatMap(inputBuffer, outputFile):
 
 if __name__ == "__main__":
     cli = argparse.ArgumentParser(description="Attempt to detect key reuse in a given file")
-    cli.add_argument("-i", type=str, metavar="path_to_file", help="Output evidence 'heat map' image to specified path")
-    cli.add_argument("inputFilePath", metavar="inputFilePath", type=str, help="Path to file containing input buffer")
+    cli.add_argument(
+            "-i", 
+            type=str, 
+            metavar="path_to_file", 
+            help="Output evidence 'heat map' image to specified path"
+    )
+    cli.add_argument(
+            "inputFilePath", 
+            metavar="inputFilePath", 
+            type=str, 
+            help="Path to file containing input buffer"
+    )
     args = cli.parse_args()
+    
     with open(args.inputFilePath,'r') as fh:
         inputBuffer = fh.readlines()[0]
+    
     ptDistribution = crypto.softDist
     threshold = (2*log(len(inputBuffer),2))-1
     xorText = crypto.distributionFromFunction(\
             [ptDistribution]*2, lambda (c1,c2): crypto.chrxor(c1,c2)\
     )
+    
     ptxts =  partition(ptVector(inputBuffer), (threshold+1)/2, (threshold+1)/2)
     suspectedReuses = findparallelciphers(inputBuffer)
+    
     if suspectedReuses == []: 
         print "No suspected key reuses found"
     else:
