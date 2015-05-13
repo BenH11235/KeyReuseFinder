@@ -156,7 +156,7 @@ if __name__ == "__main__":
             item[0][1],
             item[1]
         )  
-    print "Suspected plaintexts intervals found:"
+    print "Suspected plaintext intervals found:"
     for item in ptxts:
             print "\tFrom offset {} to offset {}".format(item[0],item[1])
     getHeatMap(inputBuffer,"out.png")
