@@ -20,7 +20,7 @@ More information can be found in [the whitepaper](https://github.com/BenH11235/K
 
 Simply clone the repository to your local directory:
 
- git clone https://github.com/BenH11235/KeyReuseFinder
+`git clone https://github.com/BenH11235/KeyReuseFinder`
 
 If you'd rather not use git from the command line, you can also download a zip of the source code via HTTP: click [here](https://github.com/BenH11235/KeyReuseFinder/archive/master.zip).
 
