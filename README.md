@@ -18,11 +18,11 @@ More information can be found in [the whitepaper](https://github.com/BenH11235/K
 
 ## Installation
 
-You have two options. Either clone the repository to your local directory of choice by running git from the command line:
+Clone the repository to your local directory of choice by running git from the command line:
 
 `git clone https://github.com/BenH11235/KeyReuseFinder`
 
-Or download a zip of the source code via HTTP: click [here](https://github.com/BenH11235/KeyReuseFinder/archive/master.zip).
+Alternately, download a zip of the source code via HTTP: click [here](https://github.com/BenH11235/KeyReuseFinder/archive/master.zip).
 
 KeyReuseFinder requires Python 2.7.X with the [numpy](http://numpy.org) package installed. See [here](http://www.scipy.org/install.html) for instructions for how to get Numpy depending on your operating system. To check if you have numpy installed, run Python from the command line and try:
 
@@ -34,9 +34,11 @@ If you have numpy installed, this will pass silently with no output. If you do n
 
 From the command line, execute:
 
-`./KeyReuseFinder.py [-h] [-d image_dump_path] inputFilePath`
+`path-to-python KeyReuseFinder.py [-h] [-d image_dump_path] inputFilePath
 
-Where inputFilePath is the path to file containing input buffer, and (optionally) image_dump_path is a location where KeyReuseFinder will dump a 'heat visualization' of the input bytes XOR space. Instances of key reuse should appear as red diagonals apart from the main diagonal.
+path-to-python should be replaced with the path to your python interpreter executable. On linux and OSX you can run "which python" to find out where this is. On Windows environments, the default location is C:\Python27\python.exe.
+
+inputFilePath should be replaced with the path to a file containing the input buffer, and (optionally) image_dump_path is a location where KeyReuseFinder will dump a 'heat visualization' of the input bytes XOR space. Instances of key reuse should appear as red diagonals apart from the main diagonal.
 
 ## History
 
