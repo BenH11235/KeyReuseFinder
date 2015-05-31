@@ -20,13 +20,17 @@ More information can be found in [the whitepaper](https://github.com/BenH11235/K
 
 Simply clone the repository to your local directory:
 
-`git clone https://github.com/BenH11235/KeyReuseFinder`
+git clone https://github.com/BenH11235/KeyReuseFinder
+
+If you'd rather not use git from the command line, you can also download a zip of the source code via HTTP: click [here](https://github.com/BenH11235/KeyReuseFinder/archive/master.zip).
+
+KeyReuseFinder requires Python 2.7.X with the [numpy](http://numpy.org) package installed. See [here](http://www.scipy.org/install.html) for instructions for how to get Numpy depending on your operating system.
 
 ## Usage
 
 From the command line, execute:
 
-`./KeyReuseFinder.py [-h] [-i image_dump_path] inputFilePath`
+`./KeyReuseFinder.py [-h] [-d image_dump_path] inputFilePath`
 
 Where inputFilePath is the path to file containing input buffer, and (optionally) image_dump_path is a location where KeyReuseFinder will dump a 'heat visualization' of the input bytes XOR space. Instances of key reuse should appear as red diagonals apart from the main diagonal.
 

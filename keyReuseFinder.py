@@ -145,9 +145,9 @@ def dumpHeatMap(inputBuffer, outputFile):
 if __name__ == "__main__":
     cli = argparse.ArgumentParser(description="Attempt to detect key reuse in a given file")
     cli.add_argument(
-            "-i", 
+            "-d", 
             type=str, 
-            metavar="path_to_file", 
+            metavar="image_dump_path", 
             help="Output evidence 'heat map' image to specified path"
     )
     cli.add_argument(
@@ -183,5 +183,5 @@ if __name__ == "__main__":
     print "Suspected plaintext intervals found:"
     for item in ptxts:
             print "\tFrom offset {} to offset {}".format(item[0],item[1])
-    if args.i is not None:
-        dumpHeatMap(inputBuffer,args.i)
+    if args.d is not None:
+        dumpHeatMap(inputBuffer,args.d)
