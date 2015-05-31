@@ -1,4 +1,3 @@
-#! /usr/bin/python
 from __future__ import division
 from math import log
 import crypto

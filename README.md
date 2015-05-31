@@ -18,13 +18,17 @@ More information can be found in [the whitepaper](https://github.com/BenH11235/K
 
 ## Installation
 
-Simply clone the repository to your local directory:
+You have two options. Either clone the repository to your local directory of choice by running git from the command line:
 
 `git clone https://github.com/BenH11235/KeyReuseFinder`
 
-If you'd rather not use git from the command line, you can also download a zip of the source code via HTTP: click [here](https://github.com/BenH11235/KeyReuseFinder/archive/master.zip).
+Or download a zip of the source code via HTTP: click [here](https://github.com/BenH11235/KeyReuseFinder/archive/master.zip).
 
-KeyReuseFinder requires Python 2.7.X with the [numpy](http://numpy.org) package installed. See [here](http://www.scipy.org/install.html) for instructions for how to get Numpy depending on your operating system.
+KeyReuseFinder requires Python 2.7.X with the [numpy](http://numpy.org) package installed. See [here](http://www.scipy.org/install.html) for instructions for how to get Numpy depending on your operating system. To check if you have numpy installed, run Python from the command line and try:
+
+`import numpy`
+
+If you have numpy installed, this will pass silently with no output. If you do not have numpy installed, Python will throw an ImportError.
 
 ## Usage
 
