@@ -34,7 +34,7 @@ If you have numpy installed, this will pass silently with no output. If you do n
 
 From the command line, execute:
 
-`path-to-python KeyReuseFinder.py [-h] [-d image_dump_path] inputFilePath
+`path-to-python KeyReuseFinder.py [-h] [-d image_dump_path] inputFilePath`
 
 path-to-python should be replaced with the path to your python interpreter executable. On linux and OSX you can run "which python" to find out where this is. On Windows environments, the default location is C:\Python27\python.exe.
 
