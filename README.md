@@ -14,7 +14,7 @@ KeyReuseFinder uses a Bayesian decision model to decide if and where key reuse h
 
 While the clasical application of this tool would be to scenarios involving a proper stream cipher, it applies to any situation where encryption is performed by XORing against a pseudorandom string, and this includes other methods of encryption - for example, block ciphers in CTR mode and One Time Pads.
 
-More information can be found in [the whitepaper](https://www.dropbox.com/s/dkfyk5b0bnsy3dq/exploiting-stream-cipher-key-reuse-in-malware-traffic.pdf?dl=0) and in the recorded talk ['Finding the Weak Crypto Needle in a Byte Haystack'](https://www.youtube.com/watch?v=GQOam3XJdWg), given at 31C3 (31st Chaos Communication Congress in Hamburg).
+More information can be found in [the whitepaper](http://hashequilibrium.com/exploiting-stream-cipher-key-reuse-in-malware-traffic.pdf) and in the recorded talk ['Finding the Weak Crypto Needle in a Byte Haystack'](https://www.youtube.com/watch?v=GQOam3XJdWg), given at 31C3 (31st Chaos Communication Congress in Hamburg).
 
 ## Installation
 
