@@ -1,10 +1,12 @@
 #! /usr/bin/python
 from __future__ import division
+from __future__ import print_function
 from math import log
 import string
 import itertools
 import operator
 import random
+import sys
 
 surprise = lambda p: sys.maxint if p==0 else log(1/p,2)
 

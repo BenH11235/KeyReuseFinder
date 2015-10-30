@@ -1,3 +1,5 @@
+#! /usr/bin/python
+
 from __future__ import division
 from math import log
 import crypto
@@ -99,6 +101,16 @@ def findparallelciphers(buf):
             matches.remove(cand)
     return matches
 
+def encryptedBySameKeyImplausibility(s1, s2, ptDist):
+    s3 = crypto.strxor(s1,s2)
+    xorText = crypto.distributionFromFunction(\
+            [ptDist]*2, lambda (c1,c2): crypto.chrxor(c1,c2)\
+    ) 
+    surprise = xorText.surprise(s3)     
+    return surprise / float(len(s3))
+ 
+
+
 
 def dumpHeatMap(inputBuffer, outputFile):
     """Generates evidence 'heat map' of string based on its evidence gain table (see xtTable for details)"""
@@ -142,6 +154,8 @@ def dumpHeatMap(inputBuffer, outputFile):
 
 
 if __name__ == "__main__":
+    print encryptedBySameKeyImplausibility("approximation","approximation",crypto.softDist)
+    exit(0)
     cli = argparse.ArgumentParser(description="Attempt to detect key reuse in a given file")
     cli.add_argument(
             "-d", 
