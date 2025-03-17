@@ -41,7 +41,7 @@ def xtTable(buf,threshold):
 
 def ptVector(buf):
     """Given a buffer, this returns an n-size vector where the ith entry
-    corresponds to the log-odd-ration of buf[i] appearing in the plainText 
+    corresponds to the log-odd-ratio of buf[i] appearing in the plainText 
     distribution vs. in the random character distribution."""
     return [evidenceLogOdds(c,crypto.softDist) for c in buf]
 
