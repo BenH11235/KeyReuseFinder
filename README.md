@@ -1,3 +1,5 @@
+![Ramnit xortext heat map visualization](images/ramnit_krf.png)
+
 # KeyReuseFinder
 
 KeyReuseFinder is a smallish command-line tool for finding instances of stream cipher key reuse.
@@ -14,7 +16,7 @@ KeyReuseFinder uses a Bayesian decision model to decide if and where key reuse h
 
 While the clasical application of this tool would be to scenarios involving a proper stream cipher, it applies to any situation where encryption is performed by XORing against a pseudorandom string, and this includes other methods of encryption - for example, block ciphers in CTR mode and One Time Pads.
 
-More information can be found in [the whitepaper](http://hashequilibrium.com/exploiting-stream-cipher-key-reuse-in-malware-traffic.pdf) and in the recorded talk ['Finding the Weak Crypto Needle in a Byte Haystack'](https://www.youtube.com/watch?v=GQOam3XJdWg), given at 31C3 (31st Chaos Communication Congress in Hamburg).
+More information can be found in [the whitepaper](docs/exploiting-stream-cipher-key-reuse-in-malware-traffic.pdf) and in the recorded talk ['Finding the Weak Crypto Needle in a Byte Haystack'](https://www.youtube.com/watch?v=GQOam3XJdWg), given at 31C3 (31st Chaos Communication Congress in Hamburg).
 
 ## Installation
 
@@ -43,4 +45,5 @@ inputFilePath should be replaced with the path to a file containing the input bu
 ## History
 
 2015-05-13, v0.1: First upload of KeyReuseFinder
+2025-03-17, v0.2: Added documentation and images from my offline project archive
 
