@@ -18,32 +18,43 @@ While the clasical application of this tool would be to scenarios involving a pr
 
 More information can be found in [the whitepaper](docs/exploiting-stream-cipher-key-reuse-in-malware-traffic.pdf) and in the recorded talk ['Finding the Weak Crypto Needle in a Byte Haystack'](https://www.youtube.com/watch?v=GQOam3XJdWg), given at 31C3 (31st Chaos Communication Congress in Hamburg).
 
-## Installation
+## Installation & Usage
 
-Clone the repository to your local directory of choice by running git from the command line:
+Think carefully whether you trust the repository. If you do, then execute:
 
-`git clone https://github.com/BenH11235/KeyReuseFinder`
+```bash
+python -m pip install  git+https://github.com/BenH11235/KeyReuseFinder
+```
 
-Alternately, download a zip of the source code via HTTP: click [here](https://github.com/BenH11235/KeyReuseFinder/archive/master.zip).
+The file `plain_cipher_examples/dircrypt_ciphers_concatenated.dat` is good to test on:
 
-KeyReuseFinder requires Python 2.7.X with the [numpy](http://numpy.org) package installed. See [here](http://www.scipy.org/install.html) for instructions for how to get Numpy depending on your operating system. To check if you have numpy installed, run Python from the command line and try:
+```python
+from keyreusefinder import krf
+with open("dircrypt_ciphers_concatenated.dat","rb") as fh:
+    data = fh.read()
+verdict = krf.find_suspected_reuses(data)
+print(verdict)
+```
 
-`import numpy`
+This should output:
+```
+[((3043, 0), 2503)]
+```
 
-If you have numpy installed, this will pass silently with no output. If you do not have numpy installed, Python will throw an ImportError.
+Meaning a key of length ~2503 bytes is reused at offsets 0 and 3043 of the input.
 
-## Usage
+To use KeyReuseFinder as a command line tool:
 
-From the command line, execute:
+```bash
+path-to-python KeyReuseFinder.py [-h] [-d image_dump_path] inputFilePath
+```
 
-`path-to-python KeyReuseFinder.py [-h] [-d image_dump_path] inputFilePath`
-
-path-to-python should be replaced with the path to your python interpreter executable. On linux and OSX you can run "which python" to find out where this is. On Windows environments, the default location is C:\Python27\python.exe.
+`path-to-python` should be replaced with the path to your python interpreter executable. On linux and OSX you can run `which python` to find out where this is.
 
 inputFilePath should be replaced with the path to a file containing the input buffer, and (optionally) image_dump_path is a location where KeyReuseFinder will dump a 'heat visualization' of the input bytes XOR space. Instances of key reuse should appear as red diagonals apart from the main diagonal.
 
 ## History
 
 2015-05-13, v0.1: First upload of KeyReuseFinder
-2025-03-17, v0.2: Added documentation and images from my offline project archive
+2025-03-17, v0.2: Added documentation and images from my offline project archive; made into an installable package
 
